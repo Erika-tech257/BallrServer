@@ -12,7 +12,7 @@ app.use(Express.json());
 
 app.use(require('./middleware/headers')); 
 
-app.use(Express.static(_dirname + '/public')); 
+app.use(Express.static(__dirname + '/public')); 
 
 app.get('/', (req, res) => res.render('index')); 
 
