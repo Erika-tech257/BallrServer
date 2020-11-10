@@ -17,5 +17,8 @@ app.use(Express.static(__dirname + '/public'));
 app.get('/', (req, res) => res.render('index')); 
 
 
+const user = require('./controllers/usercontroller'); 
+app.use('/user', user); 
+
 
 app.listen(process.env.PORT, function(){console.log(`app is listening on port ${process.env.PORT}`)})
