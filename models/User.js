@@ -1,3 +1,5 @@
+const database = require("../Db");
+
 module.exports = (sequelize, DataTypes) => {
     const User = sequelize.define('user', { 
         email: {
@@ -16,10 +18,16 @@ module.exports = (sequelize, DataTypes) => {
         displayname: {
             type: DataTypes.STRING, 
             allowNull: false, 
-            unique: true
+        }, 
+        description: {
+            type: DataTypes.STRING, 
+            allowNull: false
+        },
+        profilepic: {
+            type: DataTypes.STRING, 
+            allowNull: true
         } 
-        // profile object 
-    })
+    }) 
     return User; 
 }
-
+ 

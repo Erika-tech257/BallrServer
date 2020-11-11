@@ -6,10 +6,12 @@ const User = require('../Db').import('../models/User');
 router.post('/signup', (req, res) => {
     User.create({
         email: req.body.email, 
-        password: bcrpyt.hashSync(req.body.password, 10),
+        password: bcrpyt.hashSync(req.body.password, 12),
         rating: req.body.rating, 
-        displayname: req.body.displayname
-    })
+        displayname: req.body.displayname,
+        description: req.body.description,
+        profilepic: req.body.profilepic
+    }) 
     .then(user => {
         const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: '7d' })
 
@@ -20,6 +22,19 @@ router.post('/signup', (req, res) => {
         })
     })
     .catch(err => res.status(500).json({ error: err }))
+}) 
+
+router.post('/signin', (req, res) => {
+    User.findOne({ where: { email: req.body.email }})
+    .then(user => {
+        if (user) {
+            bcrpyt.compare(req.body.password, user.password, (err, matches) => {
+                if(matches) {
+
+                }
+            })
+        }
+    })
 })
 
 
