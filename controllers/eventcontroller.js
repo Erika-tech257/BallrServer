@@ -3,12 +3,14 @@ const Event = require('../Db').import('../models/event');
 
 const validateSession = require('../middleware/validate-session');
 
+//GET ALL EVENTS
 router.get('/', (req, res) => {
     Event.findAll()
         .then(event => res.status(200).json(event))
         .catch(err => res.status(500).json({error: err}));
 })
 
+//CREATE EVENT
 //router.post('/new',validateSession, (req, res) => {
 router.post('/new', (req, res) => {
     const eventFromRequest = {
@@ -26,5 +28,13 @@ router.post('/new', (req, res) => {
         .then(event => res.status(200).json(event))
         .catch(err => res.status(500).json({error: err}));
 })
+
+router.put('/edit/:id', (req, res) => {
+    Event.update(req.body, {
+        where: { id: req.params.id }
+    })
+    .then(event => res.status(200).json(event))
+    .catch(err => res.status(500).json({ error: err }))
+});
 
 module.exports = router;
