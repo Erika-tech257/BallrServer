@@ -22,4 +22,20 @@ router.post('/signup', (req, res) => {
     .catch(err => res.status(500).json({ error: err }))
 })
 
+
+// friend request route
+// http://localhost:3000/user/search
+
+router.get('/search/:displayname', (req, res) =>{
+    User.findOne ({
+        where: {
+            displayname: req.body.displayname
+    }
+    .then(
+        res.send("It Works!")
+    )
+})
+
+})
+
 module.exports = router; 
