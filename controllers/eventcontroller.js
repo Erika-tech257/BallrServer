@@ -29,12 +29,28 @@ router.post('/new', (req, res) => {
         .catch(err => res.status(500).json({error: err}));
 })
 
+//EDIT EVENT
 router.put('/edit/:id', (req, res) => {
     Event.update(req.body, {
         where: { id: req.params.id }
     })
     .then(event => res.status(200).json(event))
     .catch(err => res.status(500).json({ error: err }))
+
+
 });
+
+//DELETE EVENT
+router.delete('/delete/:id', async (req, res) => {
+    try {
+        const result = await Event.destroy({
+            where: { id: req.params.id }
+        })
+
+        res.status(200).json(result);
+    } catch (err) {
+        res.status(500).json({error: err});
+    }
+})
 
 module.exports = router;
