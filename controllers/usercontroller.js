@@ -25,6 +25,7 @@ router.post('/signup', (req, res) => {
 
 // friend request route
 // http://localhost:3000/user/search
+// http://localhost:3000/user/search/(displayname)
 
 router.get('/search/:displayname', (req, res) =>{
     User.findOne ({
@@ -32,7 +33,7 @@ router.get('/search/:displayname', (req, res) =>{
             displayname: req.body.displayname
     }
     .then(
-        res.send("It Works!")
+        res.send("User Found!")
     )
 })
 
