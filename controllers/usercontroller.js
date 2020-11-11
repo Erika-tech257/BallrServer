@@ -6,7 +6,7 @@ const User = require('../Db').import('../models/User');
 router.post('/signup', (req, res) => {
     User.create({
         email: req.body.email, 
-        password: bcrpyt.hashSync(req.body.password, 10),
+        password: bcrpyt.hashSync(req.body.password, 12),
         rating: req.body.rating, 
         displayname: req.body.displayname
     })

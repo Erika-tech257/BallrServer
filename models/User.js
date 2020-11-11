@@ -16,7 +16,6 @@ module.exports = (sequelize, DataTypes) => {
         displayname: {
             type: DataTypes.STRING, 
             allowNull: false, 
-            unique: true
         } 
         // profile object 
     })
