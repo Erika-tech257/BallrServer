@@ -30,11 +30,22 @@ router.post('/signin', (req, res) => {
         if (user) {
             bcrpyt.compare(req.body.password, user.password, (err, matches) => {
                 if(matches) {
+                    const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { epiresIn: '7d' }); 
 
+                    res.status(200).json({
+                        user: user, 
+                        message: 'user successfully authenticated', 
+                        sessionToken: token
+                    })
+                } else {
+                    res.status(500).json({ error: 'password mismatch' })
                 }
             })
+        } else {
+            res.status(500).json({ error: 'user not found' })
         }
     })
+    .catch(err => res.status(500).json({ error: 'database error' }))
 })
 
 module.exports = router; 
