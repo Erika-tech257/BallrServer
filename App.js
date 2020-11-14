@@ -6,7 +6,7 @@ const app = Express();
 
 const database = require('./Db'); 
 
-database.sync(); 
+database.sync({ alter: true }); 
 
 app.use(Express.json()); 
 
