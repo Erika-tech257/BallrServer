@@ -21,7 +21,8 @@ router.post('/new', (req, res) => {
         startTime: req.body.startTime,
         endTime: req.body.endTime,
         currentPlayers: req.body.currentPlayers,
-        maxPlayers: req.body.maxPlayers
+        maxPlayers: req.body.maxPlayers,
+        createdById: req.body.createdById
     }
 
     Event.create(eventFromRequest)
