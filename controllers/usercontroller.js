@@ -2,6 +2,9 @@ const router = require('express').Router();
 const jwt = require('jsonwebtoken'); 
 const bcrpyt = require('bcryptjs'); 
 const User = require('../Db').import('../models/User'); 
+const cloudinary = require('cloudinary');
+
+const validateSession = require('../middleware/validate-session');
 
 router.post('/signup', (req, res) => {
     User.create({
@@ -47,5 +50,56 @@ router.post('/signin', (req, res) => {
         })
         .catch(err => res.status(500).json({ error: err }))
 })
+
+
+// add friend route using user displayname
+// http://localhost:3000/user/search
+// http://localhost:3000/user/search/(displayname)
+
+router.get('/search/:displayname', (req, res) =>{
+    User.findOne ({
+        where: {
+            displayname: req.params.displayname
+    }
+})
+    .then(
+        res.status("User Found!"))
+        .catch(err => res.status(500).json({ error: err}))
+})
+
+// delete friend using email endpoint
+
+router.delete('/search/:email',async (req, res) =>{
+    try{
+        const results = await User.destroy({
+            where: { email: req.params.email}
+        });
+        res.status(200).json(results)
+    } catch (err) {
+        res.status(500).json({error:err});
+    }
+
+})
+
+// Profile Image Upload
+
+router.get('/cloudsign', validateSession, async (req, res) => {
+    try {
+        const ts = Math.floor(new Date().getTime() / 1000).toString()
+
+        const sig = cloudinary.utils.api_sign_request(
+            {timestamp: ts, upload_preset: 'cloudinary-mayhem'},
+            process.env.CLOUDINARY_SECRET
+        )
+        res.status(200).json({
+            sig, ts
+        })
+    } catch (err) {
+        res.status(500).json({
+            message: 'sign failed'
+        })
+    }
+})
+
 
 module.exports = router; 
