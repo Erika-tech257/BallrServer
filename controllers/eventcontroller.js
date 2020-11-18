@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const Event = require('../Db').import('../models/event');
+const EventSignUp = require('../Db').import('../models/eventSignUp');
 
 const validateSession = require('../middleware/validate-session');
 
@@ -8,6 +9,15 @@ router.get('/', (req, res) => {
     Event.findAll()
         .then(event => res.status(200).json(event))
         .catch(err => res.status(500).json({error: err}));
+})
+
+//GET ONE EVENT
+router.get('/:id', (req, res) => {
+    Event.findOne({
+        where: { id: req.params.id }
+    })
+    .then(event => res.status(200).json({ event: event }))
+    .catch(err => res.status(500).json({ error: err }))
 })
 
 //CREATE EVENT
@@ -53,5 +63,15 @@ router.delete('/delete/:id', async (req, res) => {
         res.status(500).json({error: err});
     }
 })
+
+//GET EVENTS USER IS HOSTING
+router.get('/my-events/:id', (req, res) => {
+    Event.findAll(req.body, {
+        where: { id: req.params.createdById }
+    })
+        .then(event => res.status(200).json(event))
+        .catch(err => res.status(500).json({error: err}));
+})
+
 
 module.exports = router;
