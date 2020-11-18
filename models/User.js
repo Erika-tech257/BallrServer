@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
         }, 
         displayname: {
             type: DataTypes.STRING, 
-            allowNull: false, 
+            allowNull: false
         }, 
         description: {
             type: DataTypes.STRING, 
@@ -26,7 +26,7 @@ module.exports = (sequelize, DataTypes) => {
         profilepic: {
             type: DataTypes.STRING, 
             allowNull: true
-        } 
+        }
     }) 
     return User; 
 }
