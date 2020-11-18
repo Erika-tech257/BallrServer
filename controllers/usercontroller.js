@@ -64,4 +64,12 @@ router.get('/search/:displayname', (req, res) =>{
 
 })
 
+router.get('/:id', (req, res) => {
+    User.findOne({
+        where: { id: req.params.id }
+    })
+    .then(user => res.status(200).json({ user: user }))
+    .catch(err => res.status(500).json({ error: err }))
+})
+
 module.exports = router; 
