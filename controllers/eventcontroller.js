@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const Event = require('../Db').import('../models/event');
 
-const validateSession = require('../middleware/validate-session');
+const validateSession = require('../middleware/validateSession');
 
 //GET ALL EVENTS
 router.get('/', (req, res) => {

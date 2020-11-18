@@ -4,7 +4,7 @@ const bcrpyt = require('bcryptjs');
 const User = require('../Db').import('../models/User'); 
 const cloudinary = require('cloudinary');
 
-const validateSession = require('../middleware/validate-session');
+const validateSession = require('../middleware/validateSession');
 
 router.post('/signup', (req, res) => {
     User.create({
