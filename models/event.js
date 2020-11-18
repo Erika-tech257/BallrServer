@@ -1,3 +1,5 @@
+const User = require('../Db').import('./User.js');
+
 module.exports = (sequelize, DataTypes) => {
     const Event = sequelize.define('event', {
         name: { //name of the event
@@ -33,5 +35,8 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: true
         }
     })
+    Event.belongsTo(User, { as: 'createdBy' });
+
     return Event;
 }
+
