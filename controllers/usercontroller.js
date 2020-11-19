@@ -16,7 +16,7 @@ router.post('/signup', (req, res) => {
         profilepic: req.body.profilepic
     }) 
     .then(user => {
-        const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: '7d' })
+        const token = jwt.sign({ id: user.id }, process.env.JWT, { expiresIn: '7d' })
 
         res.status(200).json({
             user: user, 
@@ -33,7 +33,7 @@ router.post('/signin', (req, res) => {
             if (user) {
                 bcrpyt.compare(req.body.password, user.password, (err, matches) => {
                     if(matches) {
-                        const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: '7d' }); 
+                        const token = jwt.sign({ id: user.id }, process.env.JWT, { expiresIn: '7d' }); 
 
                         res.status(200).json({
                             user: user, 
