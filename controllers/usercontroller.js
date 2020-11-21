@@ -16,7 +16,7 @@ router.post('/signup', (req, res) => {
         profilepic: req.body.profilepic
     }) 
     .then(user => {
-        const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: '7d' })
+        const token = jwt.sign({ id: user.id }, process.env.JWT, { expiresIn: '7d' })
 
         res.status(200).json({
             user: user, 
@@ -33,7 +33,7 @@ router.post('/signin', (req, res) => {
             if (user) {
                 bcrpyt.compare(req.body.password, user.password, (err, matches) => {
                     if(matches) {
-                        const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: '7d' }); 
+                        const token = jwt.sign({ id: user.id }, process.env.JWT, { expiresIn: '7d' }); 
 
                         res.status(200).json({
                             user: user, 
@@ -86,17 +86,39 @@ router.delete('/search/:email',async (req, res) =>{
 router.get('/cloudsign', validateSession, async (req, res) => {
     try {
         const ts = Math.floor(new Date().getTime() / 1000).toString()
+        
 
         const sig = cloudinary.utils.api_sign_request(
-            {timestamp: ts, upload_preset: 'cloudinary-mayhem'},
+            {timestamp: ts, upload_preset: 'uuhz0rq7'},
             process.env.CLOUDINARY_SECRET
+
         )
+        
         res.status(200).json({
             sig, ts
         })
     } catch (err) {
         res.status(500).json({
             message: 'sign failed'
+        })
+    }
+})
+
+router.put('/imageset', validateSession, async (req, res) => {
+    try {
+        const u = await User.findOne({where: {id: req.user.id}})
+
+        const result = await u.update({
+            avatar: req.body.url
+        })
+
+        res.status(200).json({
+            message: 'avatar url saved',
+            result
+        })
+    } catch (err){
+        res.status(500).json({
+            message: 'failed to set image'
         })
     }
 })
@@ -108,5 +130,6 @@ router.get('/:id', (req, res) => {
     .then(user => res.status(200).json({ user: user }))
     .catch(err => res.status(500).json({ error: err }))
 })
+
 
 module.exports = router; 
