@@ -10,9 +10,11 @@
   },
   "author": "YOUR NAME HERE",
   "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^1.19.4"
+  },
 
   "dependencies": {
-    "nodemon": "^1.19.4",
     "bcryptjs": "^2.4.3",
     "cloudinary": "^1.23.0",
     "dotenv": "^8.0.0",
