@@ -118,6 +118,19 @@ router.put('/updatePlayers/:eventId', (req, res) => {
     .catch(err => res.status(500).json({error: err}))
 })
 
+router.delete('/deleteSignUp/:userId/:eventId', async (req, res) => {
+    try {
+        const result = await EventSignUp.destroy({
+            where: { 
+                playerId: req.params.userId,
+                eventId: req.params.eventId 
+            }
+        })
 
+        res.status(200).json(result);
+    } catch (err) {
+        res.status(500).json({error: err});
+    }
+})
 
 module.exports = router;
