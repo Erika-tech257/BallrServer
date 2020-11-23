@@ -86,11 +86,14 @@ router.delete('/search/:email',async (req, res) =>{
 router.get('/cloudsign', validateSession, async (req, res) => {
     try {
         const ts = Math.floor(new Date().getTime() / 1000).toString()
+        
 
         const sig = cloudinary.utils.api_sign_request(
-            {timestamp: ts, upload_preset: 'cloudinary-mayhem'},
+            {timestamp: ts, upload_preset: 'uuhz0rq7'},
             process.env.CLOUDINARY_SECRET
+
         )
+        
         res.status(200).json({
             sig, ts
         })
@@ -99,6 +102,33 @@ router.get('/cloudsign', validateSession, async (req, res) => {
             message: 'sign failed'
         })
     }
+})
+
+router.put('/imageset', validateSession, async (req, res) => {
+    try {
+        const u = await User.findOne({where: {id: req.user.id}})
+
+        const result = await u.update({
+            avatar: req.body.url
+        })
+
+        res.status(200).json({
+            message: 'avatar url saved',
+            result
+        })
+    } catch (err){
+        res.status(500).json({
+            message: 'failed to set image'
+        })
+    }
+})
+
+router.get('/:id', (req, res) => {
+    User.findOne({
+        where: { id: req.params.id }
+    })
+    .then(user => res.status(200).json({ user: user }))
+    .catch(err => res.status(500).json({ error: err }))
 })
 
 
