@@ -116,7 +116,7 @@ router.put('/updatePlayers/:eventId', (req, res) => {
     })
     .then(event => res.status(200).json(event))
     .catch(err => res.status(500).json({error: err}))
-})
+})  
 
 router.delete('/deleteSignUp/:userId/:eventId', async (req, res) => {
     try {
