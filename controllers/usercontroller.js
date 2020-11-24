@@ -27,6 +27,18 @@ router.post('/signup', (req, res) => {
     .catch(err => res.status(500).json({ error: err }))
 }) 
 
+//EDIT USER
+router.put('/edit/:id', (req, res) => {
+    User.update(req.body, {
+        where: { id: req.params.id }
+    })
+    .then(user => res.status(200).json(user))
+    .catch(err => res.status(500).json({ error: err }))
+
+
+});
+
+
 router.post('/signin', (req, res) => {
     User.findOne({ where: { email: req.body.email }})
         .then(user => {
@@ -129,6 +141,7 @@ router.get('/:id', (req, res) => {
     })
     .then(user => res.status(200).json({ user: user }))
     .catch(err => res.status(500).json({ error: err }))
+    console.log('help me')
 })
 
 
