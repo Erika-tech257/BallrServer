@@ -13,20 +13,20 @@ module.exports = (sequelize, DataTypes) => {
         }, 
         rating: {
             type: DataTypes.INTEGER, 
-            allowNull: false
+            allowNull: true
         }, 
         displayname: {
             type: DataTypes.STRING, 
-            allowNull: false, 
+            allowNull: false
         }, 
         description: {
             type: DataTypes.STRING, 
-            allowNull: false
+            allowNull: true
         },
         profilepic: {
             type: DataTypes.STRING, 
             allowNull: true
-        } 
+        }
     }) 
     return User; 
 }
