@@ -109,7 +109,7 @@ router.put('/imageset', validateSession, async (req, res) => {
         const u = await User.findOne({where: {id: req.user.id}})
 
         const result = await u.update({
-            avatar: req.body.url
+            avatar: req.body.url 
         })
 
         res.status(200).json({
