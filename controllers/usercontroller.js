@@ -34,8 +34,6 @@ router.put('/edit/:id', (req, res) => {
     })
     .then(user => res.status(200).json(user))
     .catch(err => res.status(500).json({ error: err }))
-
-
 });
 
 
